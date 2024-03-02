@@ -1,0 +1,186 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://objects/player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/world.gd" type="Script" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+flip_faces = true
+size = Vector3( 10, 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.25, 0.25, 0.25 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 5, 1, 5 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 5, 5 )
+
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.0313726, 1, 0, 1 )
+
+[sub_resource type="BoxShape" id=9]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="World" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+script = ExtResource( 2 )
+
+[node name="Walls" type="MeshInstance" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+
+[node name="Spatial" type="Spatial" parent="World/Walls"]
+
+[node name="MeshInstance" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance4" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance5" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance6" type="MeshInstance" parent="World/Walls/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="Spatial2" type="Spatial" parent="World/Walls"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody2" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance2/StaticBody2"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody3" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.37114e-08 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance3/StaticBody3"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody4" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.37114e-08 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance4/StaticBody4"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody5" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.74228e-08 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance5/StaticBody5"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="World/Walls/Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -5 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="StaticBody6" type="StaticBody" parent="World/Walls/Spatial2/MeshInstance6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.74228e-08 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Spatial2/MeshInstance6/StaticBody6"]
+shape = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="World/Walls"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.62268e-07, 0, 6 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="World/Walls/StaticBody"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.62268e-07, 0, -6 )
+shape = SubResource( 5 )
+
+[node name="OmniLight" type="OmniLight" parent="World/Walls"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+omni_range = 5.70884
+
+[node name="Player" parent="World" instance=ExtResource( 1 )]
+
+[node name="RigidBody" type="RigidBody" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.68167 )
+can_sleep = false
+
+[node name="MeshInstance" type="MeshInstance" parent="World/RigidBody"]
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/RigidBody"]
+shape = SubResource( 9 )
+
+[connection signal="looked_up" from="World/Player" to="World" method="_on_Player_looked_up"]
