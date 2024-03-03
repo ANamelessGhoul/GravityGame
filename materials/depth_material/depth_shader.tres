@@ -2,7 +2,7 @@
 
 [resource]
 code = "shader_type spatial;
-render_mode unshaded, depth_test_disable;
+render_mode unshaded, depth_test_disable, cull_disabled;
 
 const float E = 2.7182818284590452353602874713527;
 
@@ -11,18 +11,70 @@ uniform float fog_distance = 5.0;
 
 uniform vec4 fog_color : hint_color = vec4(1);
 
+
+uniform float line_thickness = 1.0;
+uniform vec4 line_color: hint_color = vec4(1.0);
+
+const mat3 sobel_y = mat3(
+	vec3(1.0, 0.0, -1.0),
+	vec3(2.0, 0.0, -2.0),
+	vec3(1.0, 0.0, -1.0)
+);
+
+const mat3 sobel_x = mat3(
+	vec3(1.0, 2.0, 1.0),
+	vec3(0.0, 0.0, 0.0),
+	vec3(-1.0, -2.0, -1.0)
+);
+
+
 void vertex() {
 	POSITION = vec4(VERTEX * 2.0, 1.0);
 }
 
-void fragment() {
-	float depth = texture(DEPTH_TEXTURE, SCREEN_UV).x;
-	vec3 ndc = vec3(SCREEN_UV, depth) * 2.0 - 1.0;
-	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+float get_depth(sampler2D depth_texture, vec2 uv, mat4 inv_proj_mat){
+	float depth = texture(depth_texture, uv).x;
+	vec3 ndc = vec3(uv, depth) * 2.0 - 1.0;
+	vec4 view = inv_proj_mat * vec4(ndc, 1.0);
 	view.xyz /= view.w;
 	
-	float linear_depth = -view.z;
+	return -view.z;
+}
+
+void fragment() {
+	float linear_depth = get_depth(DEPTH_TEXTURE, SCREEN_UV, INV_PROJECTION_MATRIX);
 	
 	vec3 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
-	ALBEDO.rgb = mix(fog_color.rgb, screen_color, 1.0/(1.0 + pow(E, (linear_depth - fog_distance) * fog_level)));
+	
+	vec2 uv = SCREEN_UV;
+	float depth = get_depth(DEPTH_TEXTURE, uv, INV_PROJECTION_MATRIX);
+
+	vec2 offset = 1.0 / VIEWPORT_SIZE * line_thickness;
+
+	float n = get_depth(DEPTH_TEXTURE, uv + vec2(0.0, -offset.y), INV_PROJECTION_MATRIX);
+	float s = get_depth(DEPTH_TEXTURE, uv + vec2(0.0, offset.y), INV_PROJECTION_MATRIX);
+	float e = get_depth(DEPTH_TEXTURE, uv + vec2(offset.x, 0.0), INV_PROJECTION_MATRIX);
+	float w = get_depth(DEPTH_TEXTURE, uv + vec2(-offset.x, 0.0), INV_PROJECTION_MATRIX);
+	float nw = get_depth(DEPTH_TEXTURE, uv + vec2(-offset.x, -offset.y), INV_PROJECTION_MATRIX);
+	float ne = get_depth(DEPTH_TEXTURE, uv + vec2(offset.x, -offset.y), INV_PROJECTION_MATRIX);
+	float sw = get_depth(DEPTH_TEXTURE, uv + vec2(-offset.x, offset.y), INV_PROJECTION_MATRIX);
+	float se = get_depth(DEPTH_TEXTURE, uv + vec2(offset.x, offset.y), INV_PROJECTION_MATRIX);
+
+	mat3 surrounding_pixels = mat3(
+		vec3(nw, n, ne),
+		vec3(w, depth, e),
+		vec3(sw, s, se)
+	);
+
+	float edge_x = dot(sobel_x[0], surrounding_pixels[0]) + dot(sobel_x[1], surrounding_pixels[1]) + dot(sobel_x[2], surrounding_pixels[2]);
+	float edge_y = dot(sobel_y[0], surrounding_pixels[0]) + dot(sobel_y[1], surrounding_pixels[1]) + dot(sobel_y[2], surrounding_pixels[2]);
+
+	float edge = sqrt(pow(edge_x, 2.0)+pow(edge_y, 2.0));
+	
+	vec3 color = screen_color;
+
+	color = mix(fog_color.rgb, color, 1.0/(1.0 + pow(E, (linear_depth - fog_distance) * fog_level)));
+	color = mix(color, line_color.rgb, smoothstep(1.0, 2.0, edge));
+	ALBEDO = color;
+//	ALBEDO = vec3(smoothstep(1.0, 2.0, edge));
 }"
