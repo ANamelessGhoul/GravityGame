@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://objects/player/player.gd" type="Script" id=1]
+[ext_resource path="res://materials/depth_material/depth_material.tres" type="Material" id=2]
+
+[sub_resource type="QuadMesh" id=4]
+material = ExtResource( 2 )
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.8
@@ -14,7 +18,10 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.4,
 [node name="Camera" type="Camera" parent="CameraPivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.62268e-08, -0.6 )
 current = true
-far = 1000.0
+
+[node name="MeshInstance" type="MeshInstance" parent="CameraPivot/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.949139 )
+mesh = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.8, 0 )

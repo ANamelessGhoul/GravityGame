@@ -37,7 +37,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 script = ExtResource( 2 )
 
 [node name="Walls" type="MeshInstance" parent="World"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00614691, 3.97944, -0.929493 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 
@@ -159,7 +159,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="World/Walls/StaticBody"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.62268e-07, 0, 6 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.62167e-07, 0, 6 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape6" type="CollisionShape" parent="World/Walls/StaticBody"]

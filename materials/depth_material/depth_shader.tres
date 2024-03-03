@@ -1,0 +1,28 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+render_mode unshaded, depth_test_disable;
+
+const float E = 2.7182818284590452353602874713527;
+
+uniform float fog_level = 1.0;
+uniform float fog_distance = 5.0;
+
+uniform vec4 fog_color : hint_color = vec4(1);
+
+void vertex() {
+	POSITION = vec4(VERTEX * 2.0, 1.0);
+}
+
+void fragment() {
+	float depth = texture(DEPTH_TEXTURE, SCREEN_UV).x;
+	vec3 ndc = vec3(SCREEN_UV, depth) * 2.0 - 1.0;
+	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+	view.xyz /= view.w;
+	
+	float linear_depth = -view.z;
+	
+	vec3 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	ALBEDO.rgb = mix(fog_color.rgb, screen_color, 1.0/(1.0 + pow(E, (linear_depth - fog_distance) * fog_level)));
+}"
