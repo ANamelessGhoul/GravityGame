@@ -18,10 +18,10 @@ size = Vector3( 0.5, 0.5, 0.5 )
 extents = Vector3( 0.25, 0.25, 0.25 )
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 5, 1, 5 )
+extents = Vector3( 7, 1, 7 )
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 1, 5, 5 )
+extents = Vector3( 1, 5, 7 )
 
 [sub_resource type="CubeMesh" id=7]
 
@@ -168,9 +168,8 @@ shape = SubResource( 5 )
 
 [node name="OmniLight" type="OmniLight" parent="World/Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+visible = false
 omni_range = 5.70884
-
-[node name="Player" parent="World" instance=ExtResource( 1 )]
 
 [node name="RigidBody" type="RigidBody" parent="World"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.68167 )
@@ -183,4 +182,7 @@ material/0 = SubResource( 8 )
 [node name="CollisionShape" type="CollisionShape" parent="World/RigidBody"]
 shape = SubResource( 9 )
 
-[connection signal="looked_up" from="World/Player" to="World" method="_on_Player_looked_up"]
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+
+[connection signal="looked_up" from="Player" to="World" method="_on_Player_looked_up"]
