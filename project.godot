@@ -11,11 +11,13 @@ config_version=4
 [application]
 
 config/name="AcerolaJamZero"
+run/main_scene="res://scenes/post_process.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Physics="*res://scripts/auto_load/physics.gd"
+StaticEffect="*res://scripts/auto_load/static_effect.gd"
 
 [gui]
 

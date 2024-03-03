@@ -22,3 +22,4 @@ func _on_Player_looked_up(player: KinematicBody):
 	player.rotate(rotation_axis, -deg2rad(90))
 	player.rotate_camera(Vector2(0, -90))
 	
+	StaticEffect.show_static()
