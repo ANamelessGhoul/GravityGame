@@ -31,14 +31,6 @@ var input_look_vector: Vector2
 var input_should_jump: bool = false
 
 func _process(delta):
-	# TODO: Remove and place in a more general area
-	if Input.is_action_just_pressed("mouse_escape"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	###############
-	
 	input_move_vector = Input.get_vector("left", "right", "forward", "back")
 	input_look_vector = Input.get_vector("look_right", "look_left", "look_down", "look_up")
 	
