@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 Physics="*res://scripts/auto_load/physics.gd"
 StaticEffect="*res://scripts/auto_load/static_effect.gd"
+Fullscreen="*res://scripts/auto_load/fullscreen.gd"
 
 [gui]
 
@@ -78,6 +79,11 @@ look_up={
 look_down={
 "deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
+ ]
+}
+fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
