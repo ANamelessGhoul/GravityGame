@@ -20,6 +20,7 @@ export var jump_force: float = 20
 
 onready var camera_pivot: Spatial = $CameraPivot
 onready var camera: Camera = $CameraPivot/Camera
+onready var forward_cast: RayCast = $CameraPivot/RayCast
 
 var is_looking_up: bool = false
 var is_looking_down: bool = false
@@ -57,7 +58,7 @@ func _physics_process(delta: float):
 	
 	var snap := Physics.get_gravity_direction() * snap_scale if is_on_floor() else Vector3.ZERO
 	var up := Physics.get_gravity_direction() * -1
-	velocity = move_and_slide_with_snap(velocity, snap, up, true)
+	velocity = move_and_slide_with_snap(velocity, snap, up, true, 4, 0.8, false)
 
 	velocity += gravity * delta * 0.5
 	
@@ -73,15 +74,15 @@ func rotate_camera(degrees: Vector2):
 	rotate(transform.basis.y, deg2rad(degrees.x))
 	
 	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x + degrees.y, 90 + camera_look_angle * -1, 90 + camera_look_angle)
-	
-	if camera.rotation_degrees.x > 90 + 80:
+
+	if camera.rotation_degrees.x > 90 + 80 and forward_cast.is_colliding():
 		if not is_looking_up:
 			emit_signal("looked_up", self)
 			is_looking_up = true
 	else:
 		is_looking_up = false
 	
-	if camera.rotation_degrees.x < 90 - 80:
+	if camera.rotation_degrees.x < 90 - 80 and forward_cast.is_colliding():
 		if not is_looking_down:
 			emit_signal("looked_down", self)
 			is_looking_down = true
