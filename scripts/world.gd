@@ -1,5 +1,8 @@
 extends Spatial
 
+onready var player = $Player
+
+
 func _on_Player_looked_up(player: KinematicBody):
 	var forward_cast := player.forward_cast as RayCast
 	
@@ -26,3 +29,9 @@ func _on_Player_looked_up(player: KinematicBody):
 	player.rotate_camera(Vector2(0, -90))
 	
 	StaticEffect.show_static()
+
+
+func _on_Area_body_entered(body):
+	if body == player:
+		print("End Game!")
+	pass # Replace with function body.
