@@ -207,7 +207,7 @@ _global_script_class_icons={
 [application]
 
 config/name="AcerolaJamZero"
-run/main_scene="res://scenes/post_process.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
