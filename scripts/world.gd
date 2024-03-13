@@ -33,5 +33,4 @@ func _on_Player_looked_up(player: KinematicBody):
 
 func _on_Area_body_entered(body):
 	if body == player:
-		print("End Game!")
-	pass # Replace with function body.
+		get_tree().change_scene("res://scenes/end_screen.tscn")

@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://scripts/main_menu/main_menu.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/Kenney Pixel.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float static_amount : hint_range(0, 1) = 0.0;
+
+float rand(vec2 uv)
+{
+    float noise = (fract(sin(dot(uv ,vec2(12.9898,78.233)*2.0)) * 43758.5453));
+    return noise;
+}
+
+void fragment(){
+	vec3 static = vec3((rand(UV + vec2(sin(TIME)))));
+	COLOR.rgb = mix(texture(TEXTURE, UV).rgb, static, static_amount);
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/static_amount = 1.0
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 4 )
+
+[node name="EndScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 580.0
+
+[node name="Title" type="Label" parent="MarginContainer/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -114.5
+margin_right = 114.5
+margin_bottom = 75.0
+text = "Thank you for playing!"
+align = 1
+autowrap = true
+
+[node name="Quit" type="Button" parent="MarginContainer/Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -118.0
+margin_top = -36.0
+margin_right = 118.0
+text = "Quit"
+
+[node name="Note" type="Label" parent="MarginContainer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -204.0
+margin_top = -66.0
+margin_right = 204.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 3 )
+text = "Hope you enjoyed the concept, maybe I will flesh it out later and turn it into a real game in the future. In the mean time you can check out my other game, Re-Activated and wishlist it  on steam."
+align = 1
+autowrap = true
+
+[connection signal="pressed" from="MarginContainer/Control/Quit" to="." method="_on_Quit_pressed"]
