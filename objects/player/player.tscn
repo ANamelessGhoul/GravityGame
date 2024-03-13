@@ -28,6 +28,7 @@ current = true
 
 [node name="PostProcess" type="MeshInstance" parent="CameraPivot/Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.949139 )
+cast_shadow = 0
 mesh = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

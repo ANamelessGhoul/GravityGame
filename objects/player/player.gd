@@ -35,9 +35,6 @@ func _process(delta):
 	input_move_vector = Input.get_vector("left", "right", "forward", "back")
 	input_look_vector = Input.get_vector("look_right", "look_left", "look_down", "look_up")
 	
-	# TODO: Implement coyote time and jump buffering
-	input_should_jump = Input.is_action_just_pressed("jump")
-	
 	rotate_camera(input_look_vector * controller_look_sensitivity)
 
 func _physics_process(delta: float):
@@ -50,11 +47,6 @@ func _physics_process(delta: float):
 	var move_vector := Vector3(input_move_vector.x, 0, input_move_vector.y) * walk_speed
 	velocity = transform.basis.z * move_vector.z + transform.basis.x * move_vector.x
 	velocity += gravity_component
-	
-	# TODO: Implement coyote time and jump buffering
-	if is_on_floor() and input_should_jump:
-		velocity += Physics.get_gravity_direction() * -1 * jump_force
-	
 	
 	var snap := Physics.get_gravity_direction() * snap_scale if is_on_floor() else Vector3.ZERO
 	var up := Physics.get_gravity_direction() * -1
@@ -75,14 +67,14 @@ func rotate_camera(degrees: Vector2):
 	
 	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x + degrees.y, 90 + camera_look_angle * -1, 90 + camera_look_angle)
 
-	if camera.rotation_degrees.x > 90 + 80 and forward_cast.is_colliding():
+	if camera.rotation_degrees.x > 90 + 80 and forward_cast.is_colliding() and is_on_floor():
 		if not is_looking_up:
 			emit_signal("looked_up", self)
 			is_looking_up = true
 	else:
 		is_looking_up = false
 	
-	if camera.rotation_degrees.x < 90 - 80 and forward_cast.is_colliding():
+	if camera.rotation_degrees.x < 90 - 80 and forward_cast.is_colliding() and is_on_floor():
 		if not is_looking_down:
 			emit_signal("looked_down", self)
 			is_looking_down = true
