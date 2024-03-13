@@ -29,3 +29,4 @@ func _on_Restart_pressed():
 
 func _on_MainMenuButton_pressed():
 	get_tree().change_scene("res://scenes/main_menu.tscn")
+	Pause.set_pause(false)
