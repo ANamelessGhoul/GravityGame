@@ -206,7 +206,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="AcerolaJamZero"
+config/name="GravityGame"
 run/main_scene="res://scenes/main_menu.tscn"
 config/icon="res://icon.png"
 
@@ -216,6 +216,10 @@ Physics="*res://scripts/auto_load/physics.gd"
 StaticEffect="*res://scripts/auto_load/static_effect.gd"
 Fullscreen="*res://scripts/auto_load/fullscreen.gd"
 Pause="*res://scripts/auto_load/pause.gd"
+
+[display]
+
+window/size/fullscreen=true
 
 [editor_plugins]
 
