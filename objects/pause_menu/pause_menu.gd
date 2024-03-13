@@ -17,8 +17,15 @@ func _on_resumed():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 
+
+func _on_ResumeButton_pressed():
+	Pause.set_pause(false)
+
 # TODO: Reload current world instead of whole scene
 func _on_Restart_pressed():
 	get_tree().reload_current_scene()
 	Physics.set_gravity_direction(Vector3.DOWN)
 	Pause.set_pause(false)
+
+func _on_MainMenuButton_pressed():
+	get_tree().change_scene("res://scenes/main_menu.tscn")

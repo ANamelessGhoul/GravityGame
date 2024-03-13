@@ -120,15 +120,35 @@ margin_right = 1034.0
 margin_bottom = 46.0
 text = "Press F12 to toggle fullscreen"
 
-[node name="RestartButton" type="Button" parent="UI/PauseMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -76.5
-margin_top = -21.0
-margin_right = 76.5
-margin_bottom = 21.0
+margin_left = -144.5
+margin_top = -177.0
+margin_right = 144.5
+margin_bottom = 177.0
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+margin_top = 103.0
+margin_right = 289.0
+margin_bottom = 139.0
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+margin_top = 159.0
+margin_right = 289.0
+margin_bottom = 195.0
 text = "Restart"
 
-[connection signal="pressed" from="UI/PauseMenu/RestartButton" to="UI/PauseMenu" method="_on_Restart_pressed"]
+[node name="MainMenuButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+margin_top = 215.0
+margin_right = 289.0
+margin_bottom = 251.0
+text = "Main Menu"
+
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/ResumeButton" to="UI/PauseMenu" method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/RestartButton" to="UI/PauseMenu" method="_on_Restart_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/MainMenuButton" to="UI/PauseMenu" method="_on_MainMenuButton_pressed"]
